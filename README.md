@@ -7,7 +7,7 @@ The following modules exist so far:
 
 * **temporalio_batch**: A Temporal backend for the [Drupal Batch API](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Queue%21Batch.php/class/Batch/).
 * **temporalio_cron**: A Temporal backend for the [Drupal Cron service](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Cron.php/class/Cron/).
-* **temporalio_queue**: A Temporal backend for the [Drupal Queue system](https://api.drupal.org/api/drupal/core%21core.api.php/group/queue)
+* **temporalio_queue**: A Temporal backend for the [Drupal Queue system](https://api.drupal.org/api/drupal/core%21core.api.php/group/queue).
 * (more to come!)
 
 ## Why Temporal?
