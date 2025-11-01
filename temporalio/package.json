@@ -1,0 +1,20 @@
+{
+  "name": "temporalio-drupal-runtime",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/queue.server.ts & tsx src/batch.server.ts & tsx src/cron.schedule.server.ts",
+    "worker": "tsx src/worker.ts"
+  },
+  "dependencies": {
+    "@temporalio/client": "^1.12.0",
+    "@temporalio/worker": "^1.12.0",
+    "axios": "^1.7.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.6.0"
+  }
+}
