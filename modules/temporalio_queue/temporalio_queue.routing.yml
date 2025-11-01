@@ -1,0 +1,7 @@
+temporalio_queue.execute:
+  path: '/temporalio/queue/execute'
+  defaults:
+    _controller: '\Drupal\temporalio_queue\Controller\TemporalQueueController::execute'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]

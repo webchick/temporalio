@@ -1,0 +1,7 @@
+name: TemporalIO Queue Backend
+package: TemporalIO
+core_version_requirement: ^10 || ^11
+type: module
+description: 'Queue API backend that enqueues to Temporal and executes QueueWorkers via signed callbacks.'
+dependencies:
+  - temporalio_common

@@ -1,0 +1,12 @@
+services:
+  temporalio_queue.decorating_factory:
+    class: Drupal\temporalio_queue\TemporalQueueDecoratingFactory
+    decorates: queue
+    decoration_priority: 10
+    arguments:
+      - '@http_client'
+      - '@temporalio_common.settings'
+      - '@temporalio_queue.decorating_factory.inner'
+
+  Drupal\temporalio_queue\Controller\TemporalQueueController:
+    arguments: ['@plugin.manager.queue_worker', '@request_stack', '@temporalio_common.settings']

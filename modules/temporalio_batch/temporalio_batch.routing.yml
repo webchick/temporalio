@@ -1,0 +1,15 @@
+temporalio_batch.callback:
+  path: '/temporalio/batch/execute'
+  defaults:
+    _controller: '\Drupal\temporalio_batch\Controller\BatchCallbackController::execute'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
+
+temporalio_batch.status:
+  path: '/admin/reports/temporalio-batch/{batchId}'
+  defaults:
+    _controller: '\Drupal\temporalio_batch\Controller\BatchStatusController::view'
+    _title: 'TemporalIO Batch Status'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,4 @@
+services:
+  temporalio_batch.runner:
+    class: Drupal\temporalio_batch\Service\BatchRunner
+    arguments: ['@http_client', '@temporalio_common.settings']

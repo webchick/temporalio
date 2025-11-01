@@ -1,0 +1,4 @@
+<?php
+function temporalio_queue_cron_queue_info_alter(array &$queues) {
+  foreach ($queues as $id => &$info) { $info['time'] = 0; }
+}

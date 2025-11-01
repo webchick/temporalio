@@ -1,0 +1,6 @@
+temporalio_common.settings:
+  type: config_object
+  label: 'TemporalIO common settings'
+  mapping:
+    sidecar_base_url: { type: string, label: 'Sidecar base URL' }
+    hmac_secret:      { type: string, label: 'HMAC secret' }

@@ -1,0 +1,10 @@
+services:
+  temporalio_cron.registry:
+    class: Drupal\temporalio_cron\Service\CronRegistry
+    arguments: ['@http_client', '@temporalio_common.settings', '@logger.channel.temporalio_cron']
+  logger.channel.temporalio_cron:
+    parent: logger.channel_base
+    arguments: ['temporalio_cron']
+
+  Drupal\temporalio_cron\Controller\ExecuteController:
+    arguments: ['@temporalio_common.settings']

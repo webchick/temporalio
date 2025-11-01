@@ -1,0 +1,16 @@
+<?php
+
+use Drupal\temporalio_batch\Service\BatchRunner;
+
+function temporalio_batch_set(array $batch): string {
+  /** @var BatchRunner $runner */
+  $runner = \Drupal::service('temporalio_batch.runner');
+  return $runner->start($batch);
+}
+
+function temporalio_batch_process(?string $redirect = NULL, ?string $batch_id = NULL) {
+  $id = $batch_id ?: \Drupal::state()->get('temporalio_batch.last_id');
+  if (!$id) throw new \RuntimeException('No TemporalIO batch to process. Call temporalio_batch_set() first.');
+  $url = \Drupal\Core\Url::fromRoute('temporalio_batch.status', ['batchId' => $id]);
+  return new \Symfony\Component\HttpFoundation\RedirectResponse($url->toString());
+}

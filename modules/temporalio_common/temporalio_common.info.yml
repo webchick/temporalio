@@ -1,0 +1,5 @@
+name: TemporalIO Common
+type: module
+package: TemporalIO
+core_version_requirement: ^10 || ^11
+description: 'Shared settings (HMAC secret, sidecar URL) for TemporalIO integrations.'
