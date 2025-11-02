@@ -1,15 +1,20 @@
 import { Worker } from '@temporalio/worker';
+import { fileURLToPath } from 'node:url';
+
+// Activities
+import * as queueActs from './queue.activities';
+import * as batchActs from './batch.activities';
+import * as cronActs from './cron.activities';
 
 async function run() {
+  const workflowsPath = fileURLToPath(new URL('./workflows.ts', import.meta.url)); // <-- decode %20
+
   const worker = await Worker.create({
-    workflowsPath: new URL('./workflows.js', import.meta.url).pathname,
-    activities: {
-      ...(await import('./queue.activities.js')),
-      ...(await import('./batch.activities.js')),
-      ...(await import('./cron.activities.js')),
-    },
-    taskQueue: 'default'
+    workflowsPath,
+    activities: { ...queueActs, ...batchActs, ...cronActs },
+    taskQueue: 'default',
   });
+
   await worker.run();
 }
 
