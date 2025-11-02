@@ -129,7 +129,7 @@ If running Temporal Server locally:
 temporal server start-dev
 ```
 
-Then open **Temporal Web** at:
+Then open the **Temporal Web UI** at:
 
 ```
 http://localhost:8233
