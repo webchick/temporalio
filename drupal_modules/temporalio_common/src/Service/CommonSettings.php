@@ -8,7 +8,7 @@ class CommonSettings {
   public function __construct(private ConfigFactoryInterface $cfg) {}
 
   public function sidecarBaseUrl(): string {
-    $url = (string) $this->cfg->get('temporalio_common.settings')->get('sidecar_base_url');
+    $url = (string) $this->cfg->get('temporalio_common.settings')->get('temporal_ui_base_url');
     return rtrim($url ?: 'http://localhost:3000', '/');
   }
 

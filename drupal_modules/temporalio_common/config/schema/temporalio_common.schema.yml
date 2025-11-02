@@ -2,5 +2,5 @@ temporalio_common.settings:
   type: config_object
   label: 'Temporal.io common settings'
   mapping:
-    sidecar_base_url: { type: string, label: 'Sidecar base URL' }
+    temporal_ui_base_url: { type: string, label: 'Temporal.io base URL' }
     hmac_secret:      { type: string, label: 'HMAC secret' }
