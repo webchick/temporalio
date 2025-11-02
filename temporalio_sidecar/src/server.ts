@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import express from 'express';
 import { Connection, Client } from '@temporalio/client';
+import { ScheduleOverlapPolicy } from '@temporalio/client';
 import { verifyExtended } from './hmac';
 
 const app = express();
@@ -73,18 +74,37 @@ app.post('/schedules/upsert', async (req, res) => {
   const { id, cron, callable, options } = req.body;
   try {
     const client = await clientPromise;
-    await client.schedule.upsert(id, {
+    const schedules = client.schedule;
+    const handle = schedules.getHandle(id);
+
+    // Build a full desired spec
+    const desired = {
       spec: { cronExpressions: [cron], timeZone: options?.timezone ?? 'UTC' },
-      policies: { overlap: 'BUFFER_ONE' },
+      policies: { overlap: ScheduleOverlapPolicy.BUFFER_ONE as any }, // or just 'BUFFER_ONE'
       action: {
-        type: 'startWorkflow',
+        type: 'startWorkflow' as const,
         workflowType: 'cronRunWorkflow',
         taskQueue: 'cron-runs',
         args: [{ id, callable, drupalBase: DRUPAL_BASE, secret: HMAC_SECRET }],
       },
       state: { paused: false },
       jitter: options?.jitterSec ? { maxDuration: `${options.jitterSec}s` } : undefined,
-    });
+    };
+
+    // “Upsert” logic:
+    try {
+      // If it exists, update in place
+      await handle.describe(); // throws if not found
+      await handle.update(prev => ({
+        ...prev,
+        ...desired,
+        // keep any fields you want to preserve from prev (e.g., notes)
+      }));
+    } catch (e: any) {
+      // Not found -> create
+      await schedules.create({ scheduleId: id, ...desired });
+    }
+
     res.json({ ok: true, id });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
@@ -98,7 +118,7 @@ app.post('/schedules/delete', async (req, res) => {
   const { id } = req.body;
   try {
     const client = await clientPromise;
-    await client.schedule.delete(id);
+    await client.schedule.getHandle(id).delete();
     res.json({ ok: true });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
