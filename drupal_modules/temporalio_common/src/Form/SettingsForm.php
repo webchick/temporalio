@@ -13,10 +13,10 @@ class SettingsForm extends ConfigFormBase {
     $cfg = $this->config('temporalio_common.settings');
     $form['temporal_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Temporal UI base URL'),
-      '#default_value' => $cfg->get('temporal_url') ?: 'http://localhost:3000',
+      '#title' => $this->t('Temporal Web UI URL'),
+      '#default_value' => $cfg->get('temporal_url') ?: 'http://localhost:8233',
       '#required' => TRUE,
-      '#description' => $this->t('Base URL of the Temporal worker UI.'),
+      '#description' => $this->t('Base URL of the Temporal Web UI.'),
     ];
     $form['hmac_secret'] = [
       '#type' => 'textfield',
@@ -31,7 +31,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
     $this->configFactory->getEditable('temporalio_common.settings')
-      ->set('temporal_url', $form_state->getValue('temporalio_base_url'))
+      ->set('temporal_url', $form_state->getValue('temporal_url'))
       ->set('hmac_secret', $form_state->getValue('hmac_secret'))
       ->save();
   }
